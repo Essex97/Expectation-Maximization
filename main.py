@@ -1,3 +1,4 @@
+import click
 import numpy as np
 from copy import deepcopy
 from matplotlib import pyplot as plt
@@ -177,9 +178,11 @@ def expectation_maximization(x, k):
     return g, m
 
 
-if __name__ == '__main__':
-
-    img = plt.imread('im.jpg')
+@click.command()
+@click.option('--segments', default=8)
+@click.option('--path', default='im.jpg')
+def main(segments, path):
+    img = plt.imread(path)
 
     print('Image shape: {}'.format(img.shape))
 
@@ -190,15 +193,15 @@ if __name__ == '__main__':
     data = img.reshape((number_of_pixels, 3))
 
     # Normalize our data
-    data = data/255
+    data = data / 255
 
-    segments = [1, 2, 4, 8, 16, 32, 64]
+    post_probabilities, average_vectors = expectation_maximization(x=data, k=segments)
+    flt, new_img = construct_image(img.shape[0], img.shape[1], post_probabilities, average_vectors)
 
-    for seg in segments:
+    error = cost_function(data, flt)
 
-        post_probabilities, average_vectors = expectation_maximization(x=data, k=seg)
-        flt, new_img = construct_image(img.shape[0], img.shape[1], post_probabilities, average_vectors)
+    print('Total error: {}'.format(error))
 
-        error = cost_function(data, flt)
 
-        print('Total error: {}'.format(error))
+if __name__ == '__main__':
+    main()
