@@ -4,8 +4,10 @@ Hit the following command to execute the algorithm.
     python main.py [OPTIONS]
     
     OPTIONS:
-        --segments INTEGER   The number of segments you want to segment your image (e.g. 4, 8, 16...), default=8. 
-        --path     TEXT      The file path to your image. (e.g. im.jpg), default=im.jpg
+        --segments     INTEGER   The number of segments you want to segment your image (e.g. 4, 8, 16...), default=8
+        --path         TEXT      The file path to your image. (e.g. im.jpg), default=im.jpg
+        --iterations   INTEGER   The number of iterations you want to run the algorithm, default=100
+        --tolerance    FLOAT     The tolerance you accept, default=1e-6
     
 ## Dependencies
 * matplotlib==3.0.2
