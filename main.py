@@ -141,21 +141,22 @@ def initialize_parameters(k, d):
     return prior, m, s
 
 
-def expectation_maximization(x, k):
+def expectation_maximization(x, k, iterations, tolerance):
     """
     :param x: Table dimension (N x 3) with the pixels of th image
     :param k: The number o categories-segments
+    :param tolerance: The tolerance you accept
+    :param iterations: The number of iterations you want to run the algorithm
     :return: The probabilities of N example belongings on the k category and
     the average vectors of each category
     """
     d = x.shape[1]  # The dimension of each example-pixel (R G B) = 3
-    tolerance = 1e-6
 
     prior, m, s = initialize_parameters(k, d)
 
     prob = gaussian_mixture(x, prior, m, s, k)
 
-    for t in range(100):
+    for t in range(iterations):
 
         log_likelihood_old = log_likelihood(prob)
 
@@ -181,7 +182,9 @@ def expectation_maximization(x, k):
 @click.command()
 @click.option('--segments', default=8)
 @click.option('--path', default='im.jpg')
-def main(segments, path):
+@click.option('--iterations', default=100)
+@click.option('--tolerance', default=1e-6)
+def main(segments, path, iterations, tolerance):
     img = plt.imread(path)
 
     print('Image shape: {}'.format(img.shape))
@@ -195,7 +198,11 @@ def main(segments, path):
     # Normalize our data
     data = data / 255
 
-    post_probabilities, average_vectors = expectation_maximization(x=data, k=segments)
+    post_probabilities, average_vectors = expectation_maximization(x=data,
+                                                                   k=segments,
+                                                                   iterations=iterations,
+                                                                   tolerance=tolerance)
+
     flt, new_img = construct_image(img.shape[0], img.shape[1], post_probabilities, average_vectors)
 
     error = cost_function(data, flt)
