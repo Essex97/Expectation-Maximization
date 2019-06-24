@@ -1,5 +1,5 @@
 ## Run
-Firstly you have to install the Dependencies.
+Firstly you have to install the dependencies.
 
     pip install Pillow
     
@@ -75,6 +75,41 @@ And last one:
 
 ### Results of Experiments - Comparisons with the original Image (Max_steps = 100)
 ---
+
+<h3><center>segments=1, Total error: 0.1746</center></h3>
+<img src=images/1.png> 
+
+<br>
+
+<h3><center>segments=2, Total error: 0.0486</center></h3>
+<img src=images/2.png>
+
+<br>
+
+<h3><center>segments=4, Total error: 0.0167</center></h3>
+<img src=images/4.png> 
+
+<br>
+
+<h3><center>segments=8, Total error: 0.0078</center></h3>
+<img src=images/8.png>
+
+<br>
+
+<h3><center>segments=16, Total error: 0.0044</center></h3>
+<img src=images/16.png> 
+
+<br>
+
+<h3><center>segments=32, Total error: 0.0016</center></h3>
+<img src=images/32.png>
+
+<br>
+
+<h3><center>segments=64, Total error: 0.0009</center></h3>
+<img src=images/64.png> 
+
+
 
 
 
